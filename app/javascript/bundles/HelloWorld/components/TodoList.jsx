@@ -16,7 +16,7 @@ export default class TodoList extends React.Component {
     console.log(this.props);
     // How to set initial state in ES6 class syntax
     // https://facebook.github.io/react/docs/reusable-components.html#es6-classes
-    this.state = { text: "", todo: [] };
+    this.state = { text: "", counter: 0 };
 
     this.onChangeInput = this.onChangeInput.bind(this);
   }
@@ -27,9 +27,12 @@ export default class TodoList extends React.Component {
 
   addTodo = (e) => {
       e.preventDefault();
-      // let todoList = this.props.todoList;
-      // todoList.push({text: this.state.text, done: false});
-      // this.setState({ todo: todoList });
+      // let counter;
+      let count = this.state.counter;
+      count++;
+      this.setState({counter: count});
+      let todoList = this.props.todoList;
+      todoList.push({user_id: this.state.counter, text: this.state.text, done: false});
       // console.log("this.state.todo",this.state.todo);
 
       axios.post('/todos', {
@@ -46,10 +49,11 @@ export default class TodoList extends React.Component {
   render() {
       // console.log("this.props.todoList",this.props.todoList);
       console.log("this.props.todoList",this.props);
+      // this.state.counter
     return (
       <div>
         <h3>
-          Hello, {this.state.text}!
+          {/*Hello, {this.state.text}!*/}
         </h3>
         <hr />
         <form onSubmit={this.addTodo}>
@@ -64,7 +68,7 @@ export default class TodoList extends React.Component {
           />
             <input type="submit" value="Add Todo"/>
         </form>
-          {/*<Item data={this.props} />*/}
+          <Item state={this.state} data={this.props} />
       </div>
     );
   }
