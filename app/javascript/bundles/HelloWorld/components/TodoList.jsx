@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Item from './Item'
 
-export default class HelloWorld extends React.Component {
+export default class TodoList extends React.Component {
   static propTypes = {
     name: PropTypes.string.isRequired, // this is passed from the Rails view
   };
@@ -39,6 +40,7 @@ export default class HelloWorld extends React.Component {
             onChange={(e) => this.updateName(e.target.value)}
           />
         </form>
+        <Item data={this.props} />
       </div>
     );
   }
