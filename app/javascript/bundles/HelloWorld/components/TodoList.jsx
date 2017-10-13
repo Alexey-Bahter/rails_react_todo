@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import axios from 'axios'
 import React from 'react';
 import Item from './Item'
 
@@ -26,14 +27,25 @@ export default class TodoList extends React.Component {
 
   addTodo = (e) => {
       e.preventDefault();
-      let todoList = this.props.todoList;
-      todoList.push({text: this.state.text, done: false});
-    this.setState({ todo: todoList });
-      console.log("this.state.todo",this.state.todo);
+      // let todoList = this.props.todoList;
+      // todoList.push({text: this.state.text, done: false});
+      // this.setState({ todo: todoList });
+      // console.log("this.state.todo",this.state.todo);
+
+      axios.post('/todos', {
+          todo: {body: this.state.text, user_id: 1, done: false}
+      })
+          .then(function (response) {
+              console.log(response);
+          })
+          .catch(function (error) {
+              console.log(error);
+          });
   }
 
   render() {
-      console.log("this.props.todoList",this.props.todoList);
+      // console.log("this.props.todoList",this.props.todoList);
+      console.log("this.props.todoList",this.props);
     return (
       <div>
         <h3>
@@ -52,7 +64,7 @@ export default class TodoList extends React.Component {
           />
             <input type="submit" value="Add Todo"/>
         </form>
-          <Item data={this.props} />
+          {/*<Item data={this.props} />*/}
       </div>
     );
   }
