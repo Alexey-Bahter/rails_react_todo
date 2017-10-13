@@ -4,7 +4,7 @@ import Item from './Item'
 
 export default class TodoList extends React.Component {
   static propTypes = {
-    name: PropTypes.string.isRequired, // this is passed from the Rails view
+    // name: PropTypes.string.isRequired, // this is passed from the Rails view
   };
 
   /**
@@ -12,35 +12,47 @@ export default class TodoList extends React.Component {
    */
   constructor(props) {
     super(props);
-
+    console.log(this.props);
     // How to set initial state in ES6 class syntax
     // https://facebook.github.io/react/docs/reusable-components.html#es6-classes
-    this.state = { name: this.props.name };
+    this.state = { text: "", todo: [] };
+
+    this.onChangeInput = this.onChangeInput.bind(this);
   }
 
-  updateName = (name) => {
-    this.setState({ name });
-  };
+  onChangeInput = (text) => {
+      this.setState({text: text});
+  }
+
+  addTodo = (e) => {
+      e.preventDefault();
+      let todoList = this.props.todoList;
+      todoList.push({text: this.state.text, done: false});
+    this.setState({ todo: todoList });
+      console.log("this.state.todo",this.state.todo);
+  }
 
   render() {
+      console.log("this.props.todoList",this.props.todoList);
     return (
       <div>
         <h3>
-          Hello, {this.state.name}!
+          Hello, {this.state.text}!
         </h3>
         <hr />
-        <form >
+        <form onSubmit={this.addTodo}>
           <label htmlFor="name">
             Say hello to:
           </label>
           <input
             id="name"
             type="text"
-            value={this.state.name}
-            onChange={(e) => this.updateName(e.target.value)}
+            value={this.state.text}
+            onChange={(e) => this.onChangeInput(e.target.value)}
           />
+            <input type="submit" value="Add Todo"/>
         </form>
-        <Item data={this.props} />
+          <Item data={this.props} />
       </div>
     );
   }
