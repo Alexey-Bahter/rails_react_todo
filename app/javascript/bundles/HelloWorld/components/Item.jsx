@@ -77,19 +77,21 @@ export default class Item extends React.Component {
         let newTodos = this.state.allTodos.map((item) => {
             if (item.id == id) {
                 item.done = !item.done;
+                axios.put('/todos/' + id, {
+                    todo: {done: item.done}
+                }).then(function (response) {
+                    console.log("response : Item",response);
+                }).catch(function (error) {
+                    console.log(error);
+                });
             }
+
             return item
         });
         this.setState({ allTodos: newTodos });
         console.log("  onCheckboxTodo  :  this.state.allTodos", this.state.allTodos);
 
-        axios.put('/todos/' + id, {
-            todo: {done: true}
-            }).then(function (response) {
-                console.log("response : Item",response);
-            }).catch(function (error) {
-                console.log(error);
-        });
+
     };
     render() {
         // console.log("this.props", this.props);
