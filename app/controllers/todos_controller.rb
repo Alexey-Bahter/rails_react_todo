@@ -5,8 +5,9 @@ class TodosController < ApplicationController
   layout "hello_world"
 
   def index
-    @todos = Todo.paginate(:page => params[:page], :per_page => 5)
+    @todos = Todo.all
     @todos = { allTodos:  @todos }
+    # paginate(:page => params[:page], :per_page => 5)
   end
 
   def create
@@ -24,6 +25,7 @@ class TodosController < ApplicationController
     @todo = Todo.find(params[:id])
     # byebug
     @todo.update_attribute :done, params[:todo][:done]
+    @todo.update_attribute :body, params[:todo][:body]
     # byebug
   end
 
