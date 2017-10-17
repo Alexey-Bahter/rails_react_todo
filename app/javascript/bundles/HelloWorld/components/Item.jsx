@@ -162,18 +162,6 @@ export default class Item extends React.Component {
                     <input type="submit" value="Add Todo"/>
                 </form>
                 {items}
-
-                <div>
-                    <input
-                        type="text"
-                        ref={(input) => { this.textInput = input; }} />
-                    <input
-                        type="button"
-                        value="Focus the text input"
-                        onClick={this.focusTextInput}
-                    />
-                </div>
-
             </div>
         );
     }

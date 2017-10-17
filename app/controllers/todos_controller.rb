@@ -21,11 +21,17 @@ class TodosController < ApplicationController
   end
 
   def update
-
     @todo = Todo.find(params[:id])
     # byebug
-    @todo.update_attribute :done, params[:todo][:done]
-    @todo.update_attribute :body, params[:todo][:body]
+    if params[:todo].each do |key|
+        if key == "done"
+          @todo.update_attribute :done, params[:todo][:done]
+        end
+        if key == "body"
+          @todo.update_attribute :body, params[:todo][:body]
+        end
+      end
+    end
     # byebug
   end
 
